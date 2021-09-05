@@ -10,7 +10,7 @@ var maxCost = undefined;
 function sortProducts(criteria, array) {
     let result = [];
     if (criteria === ORDER_ASC_BY_COST) {
-        result = array.sort(function (a, b) {
+        result = array.sort(function (a, b) { 
             let aCost = parseInt(a.cost);
             let bCost = parseInt(b.cost);
 
@@ -124,7 +124,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
 
     document.getElementById("rangeFilterCost").addEventListener("click", function () {
         //Obtengo el mínimo y máximo de los intervalos para filtrar por cantidad
-        //de productos por categoría.
+        //de productos por precio.
         minCost = document.getElementById("rangeFilterCostMin").value;
         maxCost = document.getElementById("rangeFilterCostMax").value;
 
