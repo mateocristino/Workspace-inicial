@@ -1,5 +1,6 @@
 var product = {};
 var comment = {};
+let relProducts = []
 
 
 function showImagesGallery(array){
@@ -35,11 +36,13 @@ document.addEventListener("DOMContentLoaded", function(e){
             let soldCountHTML = document.getElementById("soldCount");
             let productCostHTML = document.getElementById("productCost");
             
+            
         
             productNameHTML.innerHTML = product.name;
             productDescriptionHTML.innerHTML = product.description;
             soldCountHTML.innerHTML = product.soldCount;
             productCostHTML.innerHTML = product.currency + ' ' + product.cost;
+            
             
 
             //Muestro las imagenes en forma de galería
@@ -47,6 +50,54 @@ document.addEventListener("DOMContentLoaded", function(e){
         }
     });
 });
+
+
+//Función para productos relacionados
+function showRelatedProducts(products, related){
+
+  let htmlContentToAppend = "";
+
+  for(let i = 0; i < related.length; i++){
+      let relProducts= products[related[i]];
+
+      htmlContentToAppend += `
+      <a href="product-info.html" class="list-group-item list-group-item-action">
+      <div class="row">
+          <div class="col-3">
+              <img src="` + relProducts.imgSrc + `" alt="` + relProducts.description + `" class="img-thumbnail">
+          </div>
+          <div class="col">
+              <div class="d-flex w-100 justify-content-between">
+                  <h4 class="mb-1">`+ relProducts.name + `</h4>
+                  
+                  <small class="text-muted">` + relProducts.soldCount + ` artículos</small>
+              </div>
+              <p class="mb-1">` + relProducts.description + `</p>
+              <p class="text-muted"> ` + relProducts.currency + ' ' + relProducts.cost + ` </p>
+          </div>
+      </div>
+      </a>
+      `
+
+      document.getElementById("relatedProductsImg").innerHTML = htmlContentToAppend;
+    }
+}
+
+
+//Llamo a la función getJSONData y ejecuto el evento luego de tener el HTML armado.
+document.addEventListener("DOMContentLoaded",function(e){
+  getJSONData(PRODUCTS_URL)
+  .then(resultObj=>{
+      if(resultObj.status === "ok"){
+        products = resultObj.data;
+        related = product.relatedProducts;  
+        showRelatedProducts(products, related);
+
+      }
+  })
+})
+
+
 
 //Creo una función para mostrar los comentarios.
 function showComments(commentsArray){

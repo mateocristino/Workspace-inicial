@@ -41,14 +41,44 @@ var getJSONData = function(url){
 }
 
 
+
+function showUsername(){
+
+    if(localStorage.getItem("username") != null) {
+      
+
+      var htmlContentToAppend = 
+
+      ` <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" id="userDropdown" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+          ${localStorage.getItem("username")}
+          </button>
+          <div class="dropdown-menu" aria-labelledby="userDropdown">
+             <a class="dropdown-item" href="my-profile.html">Mi perfil</a>
+             <a class="dropdown-item" href="cart.html">Mi carrito</a>
+             <a id="logout" class="dropdown-item" href="index.html">Cerrar sesión</a>
+          </div>
+        </div>
+      `;
+
+      document.getElementById("barraNegra").innerHTML += htmlContentToAppend;
+  
+    }
+
+}
+
+
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function(e){
-
-    if(localStorage.getItem("username") != null) {
-      document.getElementById("barraNegra").innerHTML += `<a class="py-2 d-none d-md-inline-block" href="#">`+ localStorage.getItem("username") +`</a>`;
-  
-    }
-
+  showUsername();
+  if (document.getElementById("logout")!==null){
+    document.getElementById("logout").addEventListener("click", function(event){
+       localStorage.clear();
+    })
+  } else if (localStorage.getItem("username")===null){
+      alert("Inicie sesión para ver nuestro contenido.");
+      location.href = "index.html";
+  }
 });
