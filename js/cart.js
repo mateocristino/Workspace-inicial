@@ -5,7 +5,7 @@ let cartProducts = [];
 function totalCost(){
     var total = 0 
     for (let i = 0; i < cartProducts.articles.length; i++){
-        total += parseInt(document.getElementById("subtotal" + i).textContent) 
+        total += parseInt(document.getElementById("subtotal" + i).textContent) // Pasamos a entero porque está como string.
     }
     document.getElementById("totalcost").innerHTML = total
 }
@@ -13,10 +13,10 @@ function totalCost(){
 
 //Función para mostrar el costo subTotal de los productos.
 function subTotalCost(id){
-var cant = document.getElementById(id).value;
+var cant = document.getElementById(id).value;  // Tomamos el valor del input.
 var subTotal = cant*currencyConv(id)
-document.getElementById("subtotal" + id).innerHTML = subTotal
-totalCost()
+document.getElementById("subtotal" + id).innerHTML = subTotal 
+totalCost() //Llamamos a la función totalCost para mostrar la suma de todos los subtotales.
 
 }
 
