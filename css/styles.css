@@ -184,7 +184,9 @@ a.custom-card:hover {
       font-weight: 400;
       text-transform: none;
       color: #676767; }
-    .form-list__row--agree input {
-      width: auto;
-      margin-right: 5px; }
+.form-list__row--agree input {
+  width: auto;
+  margin-right: 5px; }
 
+
+ 
