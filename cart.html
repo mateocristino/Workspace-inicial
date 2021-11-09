@@ -167,53 +167,70 @@
           <strong id="totalCostText">-</strong>
         </li>
       </ul>
-      <hr class="mb-3">
+      <br>
       <dl>
-        <h4>Forma de pago</h4>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#paymentModal">Seleccionar forma de pago</button>
       </dl>
-      <form>
-        <ul class="form-list">
-          <li class="form-list__row">
-            <label>Nombre</label>
-            <input type="text" name="" required="" />
-          </li>
-          <li class="form-list__row">
-            <label>Número de tarjeta</label>
-            <div id="input--cc"><i class="fas fa-credit-card"></i>
-              <input type="text" name="cc_number" required=""/>
-            </div>
-          </li>
-          <li class="form-list__row form-list__row--inline">
-            <div>
-              <label>Fecha de expiración</label>
-              <div class="form-list__input-inline">
-                <input type="text" name="cc_month" placeholder="MM"  pattern="\\d*" minlength="2" maxlength="2" required="" />
-                <input type="text" name="cc_year" placeholder="YY"  pattern="\\d*" minlength="2" maxlength="2" required="" />
-              </div>
-            </div>
-            <div>
-              <label>CVC</label>
-              <input type="text" name="cc_cvc" placeholder="123" pattern="\\d*" minlength="3" maxlength="4" required="" />
-            </div>
-          </li>
-          <li class="form-list__row form-list__row--agree">
-            <label>
-              <input type="checkbox" name="save_cc" checked="checked">
-              Guardar mi tarjeta para futuras compras
-            </label>
-          </li>
-        </ul>
-      </form>
-      
-      <button class="btn btn-primary btn-lg" type="submit">Finalizar compra</button>
-
-  
     </div>
-    
+
+    <!-- Modal -->
+    <div class="modal fade" id="paymentModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">Métodos de pago</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="accordion" id="accordionExample">
+                  <div class="card">
+                      <div class="card-header p-0" id="headingTwo">
+                          <h2 class="mb-0"> <button class="btn btn-light btn-block text-left collapsed p-3 rounded-0 border-bottom-custom" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                  <div class="d-flex align-items-center justify-content-between"> <span>Transferencia bancaria</span></div>
+                              </button> </h2>
+                      </div>
+                      <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                          <div class="card-body"> <input type="text" class="form-control" placeholder="0000 0000 0000 0000"> </div>
+                      </div>
+                  </div>
+                  <div class="card">
+                      <div class="card-header p-0">
+                          <h2 class="mb-0"> <button class="btn btn-light btn-block text-left p-3 rounded-0" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                  <div class="d-flex align-items-center justify-content-between"> <span>Tarjeta de crédito</span>
+                                      <div class="icons"> <img src="https://i.imgur.com/2ISgYja.png" width="30"> <img src="https://i.imgur.com/W1vtnOV.png" width="30">  </div>
+                                  </div>
+                              </button> </h2>
+                      </div>
+                      <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                          <div class="card-body payment-card-body"> <span class="font-weight-normal card-text">Número de tarjeta</span>
+                              <div class="input"> <i class="fa fa-credit-card"></i> <input type="text" class="form-control" placeholder="0000 0000 0000 0000"> </div>
+                              <div class="row mt-3 mb-3">
+                                  <div class="col-md-6"> <span class="font-weight-normal card-text">Fecha de expiración</span>
+                                      <div class="input"> <i class="fa fa-calendar"></i> <input type="text" class="form-control" placeholder="MM/YY"> </div>
+                                  </div>
+                                  <div class="col-md-6"> <span class="font-weight-normal card-text">CVC/CVV</span>
+                                      <div class="input"> <i class="fa fa-lock"></i> <input type="text" class="form-control" placeholder="000"> </div>
+                                  </div>
+                              </div> <span class="text-muted certificate-text"><i class="fa fa-lock"></i> Su transacción será segura.</span>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary">Confirmar</button>
+                  </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
 
   
-   
-  </nav>
+ 
   <div id="spinner-wrapper">
     <div class="lds-ring">
       <div></div>
