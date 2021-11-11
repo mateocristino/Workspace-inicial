@@ -1,24 +1,62 @@
 let cartProducts = [];
 
 
-//Función para mostrar el costo total(la suma de los productos mas el envío).
-function totalCost(){
-    var total = 0 
-    for (let i = 0; i < cartProducts.articles.length; i++){
-        total += parseInt(document.getElementById("subtotal" + i).textContent) // Pasamos a entero porque está como string.
-    }
-    document.getElementById("totalcost").innerHTML = total
-}
-
-
 //Función para mostrar el costo subTotal de los productos.
 function subTotalCost(id){
-var cant = document.getElementById(id).value;  // Tomamos el valor del input.
-var subTotal = cant*currencyConv(id)
-document.getElementById("subtotal" + id).innerHTML = subTotal 
-totalCost() //Llamamos a la función totalCost para mostrar la suma de todos los subtotales.
-
+    var cant = document.getElementById(id).value;  // Tomamos el valor del input.
+    var subTotal = cant*currencyConv(id)
+    document.getElementById("subtotal" + id).innerHTML = subTotal
+    sumSubTotal() //Llamamos a la función totalCost para mostrar la suma de todos los subtotales.
 }
+
+//Función para mostrar la suma de los subtotales.
+function sumSubTotal(){
+    htmlContentToAppend = "";
+    var subtotal = 0 
+    for (let i = 0; i < cartProducts.articles.length; i++){
+        subtotal += parseFloat(document.getElementById("subtotal" + i).textContent) // Pasamos a entero porque está como string.
+    }
+    document.getElementById("sumSubTotal").innerHTML = subtotal;
+    updateTotalCosts()
+}
+
+
+function totalModify(){
+    document.getElementById("totalCost").innerHTML = `<b>${parseFloat(document.getElementById("sumSubTotal").innerHTML) +
+    parseFloat(document.getElementById("shippingCost").innerHTML)}</b>`;
+}
+
+
+
+let comissionPercentage = 0;
+document.getElementById("premiumradio").addEventListener("change", function(){
+    comissionPercentage = 0.15;
+    updateTotalCosts();
+});
+
+document.getElementById("expressradio").addEventListener("change", function(){
+    comissionPercentage = 0.07;
+    updateTotalCosts();
+});
+
+document.getElementById("standardradio").addEventListener("change", function(){
+    comissionPercentage = 0.05;
+    updateTotalCosts();
+});
+
+
+
+function updateTotalCosts(){
+    let subtotal = parseFloat(document.getElementById("sumSubTotal").innerHTML);
+    
+    let shippingCost = subtotal * comissionPercentage;
+    document.getElementById("shippingCost").innerHTML = shippingCost;
+
+    let total =  subtotal +  shippingCost;
+    document.getElementById("totalCost").innerHTML = total;
+}
+   
+
 
 //Función para conversión de moneda
 function currencyConv(i){
@@ -46,7 +84,7 @@ function showCart(){
         <td><img src="${cartProd.src}" class = "img-fluid" style ="max-width:50px!important"></td>
         <td class="align-middle">${cartProd.name}</td>
         <td class="align-middle">${cartProd.currency} ${cartProd.unitCost}</td>
-        <td class="align-middle"><input onchange="subTotalCost(id)" id="${i}" type="number" min ="1" value=${cartProd.count}></td>
+        <td class="align-middle"><input onchange="subTotalCost(${i})" id="${i}" type="number" min ="1" value=${cartProd.count}></td>
         <td class="align-middle" id="subtotal${i}">${subTotal}</td>
         </tr>`
                         
@@ -54,12 +92,11 @@ function showCart(){
        
     }
     document.getElementById("cart").innerHTML += htmlContentToAppend;
-    totalCost()
+    sumSubTotal()
     
     
 
 }
-
 
 
 //Función que se ejecuta una vez que se haya lanzado el evento de
@@ -70,7 +107,8 @@ document.addEventListener("DOMContentLoaded", function(e){
         if (resultObj.status === "ok"){
             cartProducts = resultObj.data;
             showCart(cartProducts);
-            
+            sumSubTotal()
+            totalModify()
 
         }
     });
@@ -78,16 +116,7 @@ document.addEventListener("DOMContentLoaded", function(e){
 
 
 
-function cardFormDropdown(){
-
-}
-
-function transferDropdown(){
-
-}
-
-
-
+// Example starter JavaScript for disabling form submissions if there are invalid fields
 (function() {
     'use strict';
     window.addEventListener('load', function() {
@@ -104,8 +133,70 @@ function transferDropdown(){
         }, false);
       });
     }, false);
-  })();
+})();
 
-function cartValidation(){
 
+
+function validatePurchase() {
+    if (boolCard) {
+        let cardNumber = document.getElementById("cardNumber").value;
+        let cardExpire = document.getElementById("cardExpire").value;
+        let cardCode = document.getElementById("cardCode").value;
+        
+
+        if ((cardNumber != "") && (cardExpire != "") && (cardCode != "")){
+            alert("¡Su compra ha sido realizada con éxito!");    
+            return true
+        } else {
+            alert("Completar campos de tarjeta");
+            return false;
+        }
+    } else if(boolTransfer) {
+         let bankAccount = document.getElementById("bankAccount").value;
+         if (bankAccount != ""){
+            alert("¡Su compra ha sido realizada con éxito!");
+            return true
+         } else {
+            alert("Completar campos de transferencia");
+            return false;   
+         }
+    //} else if (!(boolCard || boolTransfer)){
+    } else {
+        alert("Seleccionar forma de pago");
+        return false;
+    }
+}
+
+let boolTransfer = false;
+let boolCard = true;
+function okTransfer(){
+    boolTransfer = true;
+    boolCard = false;
+}
+
+function okCard(){
+    boolCard = true;
+    boolTransfer = false;
+}
+
+function habilitedPurchase(){
+    //if (document.getElementById("card").checked) {
+    if (boolCard) {
+       let card = document.getElementById("cardNumber").value;
+       let cardExpire = document.getElementById("cardExpire").value;
+       let cardCode = document.getElementById("cardCode").value;
+       
+
+       if ((card != "") && (cardExpire != "") && (cardCode != "")){
+           /*jquery*/
+          $("#paymentModal").modal('hide');
+       }
+   } else  if (boolTransfer) { 
+        let bankAccount = document.getElementById("bankAccount").value;
+        if (bankAccount != ""){
+           /*jquery*/
+          $("#paymentModal").modal('hide');
+        }
+   }
+   return false;
 }

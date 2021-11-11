@@ -36,10 +36,11 @@
 
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark sticky-top bg-dark" id="barraNegra">
-      
+
     <a class="navbar-brand" href="home.html">E-Commerce</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-       <span class="navbar-toggler-icon"></span>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
@@ -66,7 +67,7 @@
       <dl>
         <h4>Artículos a comprar</h4>
       </dl>
-      
+
       <table class="table">
         <thead>
           <tr>
@@ -74,107 +75,108 @@
             <th scope="col">Nombre</th>
             <th scope="col">Precio</th>
             <th scope="col">Cantidad</th>
-            <th scope="col">Subtotal</th>
+            <th scope="col">Subtotal (UYU)</th>
           </tr>
         </thead>
         <tbody id="cart">
-            
-            
+
+
+
         </tbody>
 
-        <thead>
-          <tr>
-            <th scope="col"></th>
-            <th scope="col"></th>
-            <th scope="col"></th>
-            <th scope="col"></th>
-            <th scope="col" id="totalcost"></th>
-          </tr>
-        </thead>
+
       </table>
-      
-      <dl>
-        <h4>Tipo de envío</h4>
-      </dl>
-      <div class="d-block my-3">
-        <div class="custom-control custom-radio">
-          <input id="goldradio" name="publicationType" type="radio" class="custom-control-input" checked="" required="">
-          <label class="custom-control-label" for="goldradio">Premium 2 a 5 días</label>
+      <hr class="my-3">
+      <form onsubmit="return validatePurchase()" id="sell-info">
+        <dl>
+          <h4>Tipo de envío</h4>
+        </dl>
+        <div class="d-block my-3">
+          <div class="custom-control custom-radio">
+            <input id="premiumradio" name="publicationType" type="radio" class="custom-control-input" value="option"
+              required />
+            <label class="custom-control-label" for="premiumradio">Premium 2 a 5 días (15%)</label>
+          </div>
+          <div class="custom-control custom-radio">
+            <input id="expressradio" name="publicationType" type="radio" class="custom-control-input" value="option" />
+            <label class="custom-control-label" for="expressradio">Express 5 a 8 días (7%)</label>
+          </div>
+          <div class="custom-control custom-radio">
+            <input id="standardradio" name="publicationType" type="radio" class="custom-control-input" value="option" />
+            <label class="custom-control-label" for="standardradio">Standard 12 a 15 días (5%)</label>
+          </div>
+
         </div>
-        <div class="custom-control custom-radio">
-          <input id="premiumradio" name="publicationType" type="radio" class="custom-control-input" required="">
-          <label class="custom-control-label" for="premiumradio">Express 5 a 8 días</label>
-        </div>
-        <div class="custom-control custom-radio">
-          <input id="standardradio" name="publicationType" type="radio" class="custom-control-input" required="">
-          <label class="custom-control-label" for="standardradio">Standard 12 a 15 días</label>
-        </div>
-        <div class="row">
-          <button type="button" class="m-1 btn btn-link" data-toggle="modal" data-target="#contidionsModal">Ver condiciones</button>
-        </div>
-      </div>
-      <dl>
-        <h4>Dirección de envío</h4>
-      </dl>
-      <form class="needs-validation" id="sell-info">
+        <dl>
+          <h4>Dirección de envío</h4>
+        </dl>
+
         <div class="row">
           <div class="col-md-6 mb-3">
             <label for="productName">Calle</label>
-            <input type="text" class="form-control" id="address" placeholder="" value="" >
+            <input required type="text" class="form-control" id="address" placeholder="" value="">
             <div class="invalid-feedback">
               Ingresa una calle
             </div>
           </div>
           <div class="col-md-3 mb-3">
             <label for="productName">Número</label>
-            <input type="text" class="form-control" id="number" placeholder="" value="" >
+            <input required type="text" class="form-control" id="number" placeholder="" value="">
             <div class="invalid-feedback">
               Ingresa un numero
             </div>
           </div>
         </div>
         <div class="row">
-        <div class="col-md-6 mb-3">
-          <label for="productName">Esquina</label>
-          <input type="text" class="form-control" id="corner" placeholder="" value="" >
-          <div class="invalid-feedback">
-            Ingresa una esquina
+          <div class="col-md-6 mb-3">
+            <label for="productName">Esquina</label>
+            <input required type="text" class="form-control" id="corner" placeholder="" value="">
+            <div class="invalid-feedback">
+              Ingresa una esquina
+            </div>
           </div>
         </div>
-        </div>
+
+        <hr class="my-3">
+        <dl>
+          <h4>Costos</h4>
+        </dl>
+        <ul class="list-group mb-3">
+          <li class="list-group-item d-flex justify-content-between lh-condensed">
+            <div>
+              <h6 class="my-0">Subtotal</h6>
+              <small class="text-muted">Costo unitario del producto por cantidad</small>
+            </div>
+            <div scope="col" id="sumSubTotal">-</div>
+          </li>
+          <li class="list-group-item d-flex justify-content-between lh-condensed">
+            <div>
+              <h6 class="my-0">Costo de envío</h6>
+              <small class="text-muted">Según el tipo de envío</small>
+            </div>
+            <span class="text-muted" id="shippingCost">-</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between">
+            <span>Total ($)</span>
+            <strong id="totalCost">-</strong>
+          </li>
+        </ul>
+        <br>
+        <dl>
+          <button type="button" class="btn btn-outline-primary" data-toggle="modal"
+            data-target="#paymentModal">Seleccionar forma de pago</button>
+        </dl>
+        <dl>
+          <div class="form-group text-center">
+            <button type="submit" class="btn btn-primary">Finalizar compra</button>
+          </div>
+        </dl>
       </form>
-      <hr class="my-3">
-      <dl>
-        <h4>Costos</h4>
-      </dl>
-      <ul class="list-group mb-3">
-        <li class="list-group-item d-flex justify-content-between lh-condensed">
-          <div>
-            <h6 class="my-0">Subtotal</h6>
-            <small class="text-muted">Costo unitario del producto por cantidad</small>
-          </div>
-          <span class="text-muted" id="productCostText">-</span>
-        </li>
-        <li class="list-group-item d-flex justify-content-between lh-condensed">
-          <div>
-            <h6 class="my-0">Costo de envío</h6>
-            <small class="text-muted">Según el tipo de envío</small>
-          </div>
-          <span class="text-muted" id="comissionText">-</span>
-        </li>
-        <li class="list-group-item d-flex justify-content-between">
-          <span>Total ($)</span>
-          <strong id="totalCostText">-</strong>
-        </li>
-      </ul>
-      <br>
-      <dl>
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#paymentModal">Seleccionar forma de pago</button>
-      </dl>
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="paymentModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="paymentModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+      aria-labelledby="staticBackdropLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -184,53 +186,70 @@
             </button>
           </div>
           <div class="modal-body">
-            <div class="accordion" id="accordionExample">
-                  <div class="card">
-                      <div class="card-header p-0" id="headingTwo">
-                          <h2 class="mb-0"> <button class="btn btn-light btn-block text-left collapsed p-3 rounded-0 border-bottom-custom" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                  <div class="d-flex align-items-center justify-content-between"> <span>Transferencia bancaria</span></div>
-                              </button> </h2>
-                      </div>
-                      <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                          <div class="card-body"> <input type="text" class="form-control" placeholder="0000 0000 0000 0000"> </div>
-                      </div>
+            <form class="needs-validation" novalidate onsubmit="return habilitedPurchase();">
+              <div class="accordion" id="accordionExample">
+                <div class="card">
+                  <div class="card-header p-0" id="headingTwo">
+                    <h2 class="mb-0"> <button
+                        class="btn btn-light btn-block text-left collapsed p-3 rounded-0 border-bottom-custom"
+                        id="bankTransfer" type="button" data-toggle="collapse" data-target="#collapseTwo"
+                        aria-expanded="false" aria-controls="collapseTwo" onclick="okTransfer()">
+                        <div class="d-flex align-items-center justify-content-between"> <span>Transferencia
+                            bancaria</span></div>
+                      </button> </h2>
                   </div>
-                  <div class="card">
-                      <div class="card-header p-0">
-                          <h2 class="mb-0"> <button class="btn btn-light btn-block text-left p-3 rounded-0" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                  <div class="d-flex align-items-center justify-content-between"> <span>Tarjeta de crédito</span>
-                                      <div class="icons"> <img src="https://i.imgur.com/2ISgYja.png" width="30"> <img src="https://i.imgur.com/W1vtnOV.png" width="30">  </div>
-                                  </div>
-                              </button> </h2>
-                      </div>
-                      <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-                          <div class="card-body payment-card-body"> <span class="font-weight-normal card-text">Número de tarjeta</span>
-                              <div class="input"> <i class="fa fa-credit-card"></i> <input type="text" class="form-control" placeholder="0000 0000 0000 0000"> </div>
-                              <div class="row mt-3 mb-3">
-                                  <div class="col-md-6"> <span class="font-weight-normal card-text">Fecha de expiración</span>
-                                      <div class="input"> <i class="fa fa-calendar"></i> <input type="text" class="form-control" placeholder="MM/YY"> </div>
-                                  </div>
-                                  <div class="col-md-6"> <span class="font-weight-normal card-text">CVC/CVV</span>
-                                      <div class="input"> <i class="fa fa-lock"></i> <input type="text" class="form-control" placeholder="000"> </div>
-                                  </div>
-                              </div> <span class="text-muted certificate-text"><i class="fa fa-lock"></i> Su transacción será segura.</span>
-                          </div>
-                      </div>
+                  <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                    <div class="card-body"> <input type="text" class="form-control" id="bankAccount"
+                        placeholder="0000 0000 0000 0000" required> </div>
                   </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary">Confirmar</button>
+                </div>
+                <div class="card">
+                  <div class="card-header p-0">
+                    <h2 class="mb-0"> <button class="btn btn-light btn-block text-left p-3 rounded-0"
+                        data-toggle="collapse" id="card" data-target="#collapseOne" aria-expanded="true"
+                        aria-controls="collapseOne" onclick="okCard()">
+                        <div class="d-flex align-items-center justify-content-between"> <span>Tarjeta de crédito</span>
+                          <div class="icons"> <img src="https://i.imgur.com/2ISgYja.png" width="30"> <img
+                              src="https://i.imgur.com/W1vtnOV.png" width="30"> </div>
+                        </div>
+                      </button> </h2>
                   </div>
-            </div>
+                  <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                    data-parent="#accordionExample">
+                    <div class="card-body payment-card-body"> <span class="font-weight-normal card-text">Número de
+                        tarjeta</span>
+                      <div class="input"> <i class="fa fa-credit-card"></i> <input type="text" class="form-control"
+                          id="cardNumber" placeholder="0000 0000 0000 0000" required> </div>
+                      <div class="row mt-3 mb-3">
+                        <div class="col-md-6"> <span class="font-weight-normal card-text">Fecha de expiración</span>
+                          <div class="input"> <i class="fa fa-calendar"></i> <input type="text" class="form-control"
+                              id="cardExpire" placeholder="MM/YY" required> </div>
+                        </div>
+                        <div class="col-md-6"> <span class="font-weight-normal card-text">CVC/CVV</span>
+                          <div class="input"> <i class="fa fa-lock"></i> <input type="text" class="form-control"
+                              id="cardCode" placeholder="000" required> </div>
+                        </div>
+                      </div> <span class="text-muted certificate-text"><i class="fa fa-lock"></i> Su transacción será
+                        segura.</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                  <button type="submit" class="btn btn-primary">Confirmar</button>
+                </div>
+            </form>
           </div>
         </div>
       </div>
     </div>
+    </div>
   </nav>
 
 
-  
- 
+
+
+
   <div id="spinner-wrapper">
     <div class="lds-ring">
       <div></div>
