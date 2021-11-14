@@ -86,16 +86,32 @@ function showCart(){
         <td class="align-middle">${cartProd.currency} ${cartProd.unitCost}</td>
         <td class="align-middle"><input onchange="subTotalCost(${i})" id="${i}" type="number" min ="1" value=${cartProd.count}></td>
         <td class="align-middle" id="subtotal${i}">${subTotal}</td>
+        <td class="align-middle"> <button type="button" class="btn btn-secondary" onclick="deleteElement('${i}')"><i class="fas fa-trash"></i></button> </td>
         </tr>`
                         
                        
        
     }
-    document.getElementById("cart").innerHTML += htmlContentToAppend;
+    document.getElementById("cart").innerHTML = htmlContentToAppend;
     sumSubTotal()
     
     
 
+}
+
+
+function deleteElement(i){
+    
+    cartProducts.articles.splice(i, 1);
+    let j = 0
+    for(let product of cartProducts.articles){
+        product.count = document.getElementById(j).value; 
+        
+    }
+
+    showCart();
+    sumSubTotal();
+    totalModify();
 }
 
 
